@@ -14,20 +14,19 @@ node {
         app = docker.build("tarumahesh/hellonode")
             }
     stage('Get Image id') {
-        steps {
+        
             script {
                 def IMAGE_ID = sh(script: "docker images | grep -E '^tarumahesh.*hellonode' | head -1 | awk '{print \$3}'", returnStdout:true).trim()
                 env.IMAGE_ID = IMAGE_ID
                     }
                }
- }
+ 
 
-    stage('Get Image Vulns - Qualys Plugin') {
-        steps {
+    stage('Get Image Vulns - Qualys Plugin') { 
             getImageVulnsFromQualys useGlobalConfig:true,
             imageIds: env.IMAGE_ID
              }
- }
+ 
 
  /*   stage('Test image') {
          We test our image with a simple smoke test:
